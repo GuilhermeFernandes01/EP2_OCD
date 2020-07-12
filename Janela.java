@@ -184,7 +184,6 @@ public class Janela extends JFrame {
                 List<Estrutura> list = new LinkedList<>();
                 Estrutura test = new Estrutura("test", "test");
                 list.add(test);
-                System.out.println(list.size());
 
                 if (linhas[0].equals("")) {
                     JOptionPane.showMessageDialog(null, "Digite o c\u00f3digo");

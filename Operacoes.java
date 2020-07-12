@@ -1,10 +1,8 @@
-import java.util.Arrays;
-
 public class Operacoes {
-    public int s1 = 0000;
-    public int s2 = 0000;
-    public int s3 = 0000;
-    public int s4 = 0000;
+    public int s1 = 0;
+    public int s2 = 0;
+    public int s3 = 0;
+    public int s4 = 0;
     public String s = "";
     public String z = "";
 
@@ -528,19 +526,15 @@ public class Operacoes {
                 switch (reg3) {
                     case "$s1":
                         arraySinaisControle[6-1] = 1;
-                        System.out.println("CAIU S1");
                         break;
                     case "$s2":
                         arraySinaisControle[8-1] = 1;
-                        System.out.println("CAIU S2");
                         break;
                     case "$s3":
                         arraySinaisControle[10-1] = 1;
-                        System.out.println("CAIU S3");
                         break;
                     case "$s4":
                         arraySinaisControle[12-1] = 1;
-                        System.out.println("CAIU S4");
                         break;
                     default:
                         break;
@@ -572,6 +566,272 @@ public class Operacoes {
                 break;
             default:
                 break;
+        }
+
+        if (operacao.equals("add")) {
+            boolean ehNumero = false;
+            try {
+                Integer.parseInt(reg3);
+                ehNumero = true;
+            } catch (NumberFormatException e) {
+            }
+
+            if (ehNumero) {
+                arrayOpCodes[2-1] = 1;
+                arrayOpCodes[4-1] = 1;
+                arraySinaisControle[21-1] = 1;
+
+                switch (reg2) {
+                    case "$s1":
+                        arraySinaisControle[7-1] = 1;
+                        break;
+                    case "$s2":
+                        arraySinaisControle[9-1] = 1;
+                        break;
+                    case "$s3":
+                        arraySinaisControle[11-1] = 1;
+                        break;
+                    case "$s4":
+                        arraySinaisControle[13-1] = 1;
+                        break;
+                    default:
+                        break;
+                }
+
+                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
+                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
+                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
+                
+                arraySinaisControle = zeraArray(arraySinaisControle);
+                arraySinaisControle[19-1] = 1;
+                arraySinaisControle[22-1] = 1;
+
+                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
+                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
+                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
+
+                arraySinaisControle = zeraArray(arraySinaisControle);
+                arraySinaisControle[23-1] = 1;
+
+                switch (reg1) {
+                    case "$s1":
+                        arraySinaisControle[6-1] = 1;
+                        break;
+                    case "$s2":
+                        arraySinaisControle[8-1] = 1;
+                        break;
+                    case "$s3":
+                        arraySinaisControle[10-1] = 1;
+                        break;
+                    case "$s4":
+                        arraySinaisControle[12-1] = 1;
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                arrayOpCodes[2-1] = 1; 
+                arraySinaisControle[21-1] = 1;
+
+                switch (reg2) {
+                    case "$s1":
+                        arraySinaisControle[7-1] = 1;
+                        break;
+                    case "$s2":
+                        arraySinaisControle[9-1] = 1;
+                        break;
+                    case "$s3":
+                        arraySinaisControle[11-1] = 1;
+                        break;
+                    case "$s4":
+                        arraySinaisControle[13-1] = 1;
+                        break;
+                    default:
+                        break;
+                }
+
+                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
+                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
+                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
+                
+                arraySinaisControle = zeraArray(arraySinaisControle);
+                arraySinaisControle[22-1] = 1;
+
+                switch (reg3) {
+                    case "$s1":
+                        arraySinaisControle[7-1] = 1;
+                        break;
+                    case "$s2":
+                        arraySinaisControle[9-1] = 1;
+                        break;
+                    case "$s3":
+                        arraySinaisControle[11-1] = 1;
+                        break;
+                    case "$s4":
+                        arraySinaisControle[13-1] = 1;
+                        break;
+                    default:
+                        break;
+                }
+
+                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
+                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
+                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
+
+                arraySinaisControle = zeraArray(arraySinaisControle);
+                arraySinaisControle[23-1] = 1;
+
+                switch (reg1) {
+                    case "$s1":
+                        arraySinaisControle[6-1] = 1;
+                        break;
+                    case "$s2":
+                        arraySinaisControle[8-1] = 1;
+                        break;
+                    case "$s3":
+                        arraySinaisControle[10-1] = 1;
+                        break;
+                    case "$s4":
+                        arraySinaisControle[12-1] = 1;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        if (operacao.equals("sub")) {
+            boolean ehNumero = false;
+            try {
+                Integer.parseInt(reg3);
+                ehNumero = true;
+            } catch (NumberFormatException e) {
+            }
+
+            if (ehNumero) {
+                arrayOpCodes[2-1] = 1;
+                arrayOpCodes[3-1] = 1;
+                arrayOpCodes[4-1] = 1;
+                arraySinaisControle[21-1] = 1;
+
+                switch (reg2) {
+                    case "$s1":
+                        arraySinaisControle[7-1] = 1;
+                        break;
+                    case "$s2":
+                        arraySinaisControle[9-1] = 1;
+                        break;
+                    case "$s3":
+                        arraySinaisControle[11-1] = 1;
+                        break;
+                    case "$s4":
+                        arraySinaisControle[13-1] = 1;
+                        break;
+                    default:
+                        break;
+                }
+
+                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
+                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
+                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
+                
+                arraySinaisControle = zeraArray(arraySinaisControle);
+                arraySinaisControle[19-1] = 1;
+                arraySinaisControle[22-1] = 1;
+
+                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
+                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
+                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
+
+                arraySinaisControle = zeraArray(arraySinaisControle);
+                arraySinaisControle[23-1] = 1;
+
+                switch (reg1) {
+                    case "$s1":
+                        arraySinaisControle[6-1] = 1;
+                        break;
+                    case "$s2":
+                        arraySinaisControle[8-1] = 1;
+                        break;
+                    case "$s3":
+                        arraySinaisControle[10-1] = 1;
+                        break;
+                    case "$s4":
+                        arraySinaisControle[12-1] = 1;
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                arrayOpCodes[2-1] = 1;
+                arrayOpCodes[3-1] = 1;
+                arraySinaisControle[21-1] = 1;
+
+                switch (reg2) {
+                    case "$s1":
+                        arraySinaisControle[7-1] = 1;
+                        break;
+                    case "$s2":
+                        arraySinaisControle[9-1] = 1;
+                        break;
+                    case "$s3":
+                        arraySinaisControle[11-1] = 1;
+                        break;
+                    case "$s4":
+                        arraySinaisControle[13-1] = 1;
+                        break;
+                    default:
+                        break;
+                }
+
+                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
+                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
+                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
+                
+                arraySinaisControle = zeraArray(arraySinaisControle);
+                arraySinaisControle[22-1] = 1;
+
+                switch (reg3) {
+                    case "$s1":
+                        arraySinaisControle[7-1] = 1;
+                        break;
+                    case "$s2":
+                        arraySinaisControle[9-1] = 1;
+                        break;
+                    case "$s3":
+                        arraySinaisControle[11-1] = 1;
+                        break;
+                    case "$s4":
+                        arraySinaisControle[13-1] = 1;
+                        break;
+                    default:
+                        break;
+                }
+
+                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
+                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
+                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
+
+                arraySinaisControle = zeraArray(arraySinaisControle);
+                arraySinaisControle[23-1] = 1;
+
+                switch (reg1) {
+                    case "$s1":
+                        arraySinaisControle[6-1] = 1;
+                        break;
+                    case "$s2":
+                        arraySinaisControle[8-1] = 1;
+                        break;
+                    case "$s3":
+                        arraySinaisControle[10-1] = 1;
+                        break;
+                    case "$s4":
+                        arraySinaisControle[12-1] = 1;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
