@@ -4,28 +4,29 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Janela extends JFrame {
 
     private JPanel contentPane;
-    private static JTextField txt_s1;
+    static JTextField txt_s1;
     private static JTextField txt_s2;
     private static JTextField txt_s3;
-    private static JTextField txt_s4;
-    static JTextField txt_s1dec;
-    private static JTextField txt_s2dec;
-    private static JTextField txt_s3dec;
-    static JTextField txt_s4dec;
+    static JTextField txt_s4;
     private static JButton btn_rodar;
     private static JButton btn_reiniciar;
     private static JButton btn_limpar;
     private JTextArea txt_cod;
     private JTextArea txt_maquina;
     private JTextArea txt_ciclos;
+    
+
+    private static final long serialVersionUID = 42L;
 
     public int i = 0;
-    // Operacoes op = new Operacoes();
-    // Ciclos ciclos = new Ciclos();
+    Operacoes op = new Operacoes();
+    Ciclos ciclos = new Ciclos();
     private static JTextField txt_s;
     private static JTextField txt_z;
     // ArrayList<Label_jmp> array_label = new ArrayList<Label_jmp>();
@@ -39,10 +40,6 @@ public class Janela extends JFrame {
                 try {
                     Janela janela = new Janela();
                     janela.setVisible(true);
-                    txt_s1dec.setText("0000");
-                    txt_s2dec.setText("0000");
-                    txt_s3dec.setText("0000");
-                    txt_s4dec.setText("0000");
                     txt_s1.setText("0000");
                     txt_s2.setText("0000");
                     txt_s3.setText("0000");
@@ -69,33 +66,6 @@ public class Janela extends JFrame {
         //     }
         // }
         return retorno_linha;
-    }
-
-    /* M�todoo que cria arrayslists da instru��o e das vari�veis*/
-    @SuppressWarnings("unchecked")
-    public static void dividirEmArraysL(ArrayList txt, ArrayList ins, ArrayList var, ArrayList var2) {
-        for (int u = 0; u < txt.size(); u++) {
-            if (txt.get(u).equals(" ")) {
-                u++;
-                while (u < txt.size()) {
-                    if (txt.get(u).equals(",")) {
-                        u++;
-                        while (u < txt.size()) {
-                            var2.add(txt.get(u));
-                            u++;
-                        }
-                    } else {
-                        var.add(txt.get(u));
-                    }
-                    u++;
-                }
-
-            } else {
-                ins.add(txt.get(u));
-
-            }
-        }
-
     }
 
     public static String add_zero(String l) {
@@ -131,10 +101,6 @@ public class Janela extends JFrame {
         // zera o array dos jmps das labels
         // array_label.clear();
         // zera todos os campos de texto
-        txt_s1dec.setText("0000");
-        txt_s2dec.setText("0000");
-        txt_s3dec.setText("0000");
-        txt_s4dec.setText("0000");
         txt_s1.setText("0000");
         txt_s2.setText("0000");
         txt_s3.setText("0000");
@@ -143,10 +109,10 @@ public class Janela extends JFrame {
         txt_s.setText("");
 
         // zera todas as variaveis
-        // op.setAx(0);
-        // op.setBx(0);
-        // op.setCx(0);
-        // op.setDx(0);
+        op.setS1(0);
+        op.setS2(0);
+        op.setS3(0);
+        op.setS4(0);
         // op.setS("");
         // op.setZ("");
         txt_ciclos.setText("");
@@ -159,7 +125,8 @@ public class Janela extends JFrame {
     public Janela() {
         setTitle("Interpretador de Assembly ");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 800, 605);
+        setBounds(100, 100, 1000, 605);
+        setLocationRelativeTo(null);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -174,7 +141,7 @@ public class Janela extends JFrame {
         contentPane.add(lblmaquina);
 
         JLabel lblciclos = new JLabel("Ciclo de execu\u00e7\u00e3o:");
-        lblciclos.setBounds(500, 220, 210, 14);
+        lblciclos.setBounds(700, 220, 210, 14);
         contentPane.add(lblciclos);
 
         btn_rodar = new JButton("Rodar");
@@ -214,6 +181,10 @@ public class Janela extends JFrame {
 
 
                 String[] linhas = txt_cod.getText().split("\n");//Cada posi��o do array = 1 linha
+                List<Estrutura> list = new LinkedList<>();
+                Estrutura test = new Estrutura("test", "test");
+                list.add(test);
+                System.out.println(list.size());
 
                 if (linhas[0].equals("")) {
                     JOptionPane.showMessageDialog(null, "Digite o c\u00f3digo");
@@ -223,7 +194,8 @@ public class Janela extends JFrame {
                 ArrayList<String> ins = new ArrayList<String>();//ArrayList da instru��o
                 ArrayList<String> var = new ArrayList<String>();//ArrayList das vari�veis
                 ArrayList<String> var2 = new ArrayList<String>();
-                String insS, varS, var2S, resultado;
+                ArrayList<String> var3 = new ArrayList<String>();
+                String insS, varS, var2S, var3S, resultado;
                 int result = 0;
 
                 String aux = linhas[i];//i = contador de cliques no bot�o, ou seja, executa a linha em quest�o
@@ -232,38 +204,59 @@ public class Janela extends JFrame {
                     char x = aux.charAt(j);
                     txt.add(String.valueOf(x));
                 }
-
-                dividirEmArraysL(txt, ins, var, var2);
+                
+                String[] str = new String[txt.size()];
+                txt.toArray(str);
+                
+                int encontrou = 0;
+                for (int i = 0; i < str.length; i++) {
+                    if (encontrou == 0 && !str[i].equals(" ")) {
+                        ins.add(str[i]);
+                    } else if (encontrou == 1 && !str[i].equals(",")) {
+                        var.add(str[i]);
+                    } else if (encontrou == 3 && !str[i].equals(",")) {
+                        var2.add(str[i]);
+                    } else if (encontrou == 5) {
+                        var3.add(str[i]);
+                    } else if (str[i].equals(" ") || str[i].equals(",")) {
+                        encontrou++;
+                    }
+                }            
 
                 insS = retornaString(ins);
                 varS = retornaString(var);
                 var2S = retornaString(var2);
+                var3S = retornaString(var3);
 
-                System.out.println(insS);
-                System.out.println(varS);
-                System.out.println(var2S);
+                // System.out.println(insS);
+                // System.out.println(varS);
+                // System.out.println(var2S);
+                // System.out.println(var3S);                
 
                 if (insS.equals("add")) {//Comparar instru��es
-                    // result = op.add(varS, var2S);
-                    // txt_ciclos.setText(ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao("add", varS, var2S));
-                } else if (insS.equals("div")) {
-                    // result = op.div(varS, var2S);
-                    // txt_ciclos.setText(ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao("div", varS, var2S));
+                    result = op.add(varS, var2S, var3S);
+                    txt_ciclos.setText(Ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao("add", varS, var2S));
                 } else if (insS.equals("sub")) {
-                    // result = op.sub(varS, var2S);
+                    result = op.sub(varS, var2S, var3S);
+                    // System.out.println("Resultado: " + result);
                     // txt_ciclos.setText(ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao("sub", varS, var2S));
-                } else if (insS.equals("mul")) {
-                    // result = op.mul(varS, var2S);
-                    // txt_ciclos.setText(ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao("mul", varS, var2S));
+                } else if (insS.equals("li")) {
+                    result = op.li(varS, var2S);
+                    //System.out.println("Resultado: " + result);
                 } else if (insS.equals("mov")) {
-                    // result = op.mov(varS, var2S);
+                    result = op.mov(varS, var2S);
+                    // System.out.println("Resultado: " + result);
                     // txt_ciclos.setText(ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao("mov", varS, var2S));
-                } else if (insS.equals("inc")) {
-                    // result = op.inc(varS);
-                    // txt_ciclos.setText(ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao("inc", varS, var2S));
-                } else if (insS.equals("dec")) {
-                    // result = op.dec(varS);
-                    // txt_ciclos.setText(ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao("dec", varS, var2S));
+                } else if (insS.equals("beq")) {
+                    result = op.beq(varS, var2S, var3S);
+                    i = result;
+                    // System.out.println("Linha atual: " + i);
+                    // System.out.println("Instrução atual: " + linhas[i]);
+                } else if (insS.equals("bne")) {
+                    result = op.bne(varS, var2S, var3S);
+                    i = result;
+                } else if (insS.equals("slt")) {
+                    result = op.slt(varS, var2S, var3S);
                 } else if (insS.equals("cmp")) {
                     // resultado = op.cmp(varS, var2S);
                     txt_ciclos.setText("");
@@ -349,17 +342,15 @@ public class Janela extends JFrame {
 
                 }
 
-                // txt_s1dec.setText("" + add_zero(Integer.toString(op.ax)));
-                // txt_s1.setText("" + add_zero(Integer.toHexString(op.ax)));
+                txt_s1.setText("" + add_zero(Integer.toString(op.s1)));
 
-                // txt_s2dec.setText("" + add_zero(Integer.toString(op.bx)));
-                // txt_s2.setText("" + add_zero(Integer.toHexString(op.bx)));
+                txt_s2.setText("" + add_zero(Integer.toString(op.s2)));
 
-                // txt_s3dec.setText("" + add_zero(Integer.toString(op.cx)));
-                // txt_s3.setText("" + add_zero(Integer.toHexString(op.cx)));
+                txt_s3.setText("" + add_zero(Integer.toString(op.s3)));
 
-                // txt_s4dec.setText("" + add_zero(Integer.toString(op.dx)));
-                // txt_s4.setText("" + add_zero(Integer.toHexString(op.dx)));
+                txt_s4.setText("" + add_zero(Integer.toString(op.s4)));
+
+                txt_maquina.append(op.traduz(insS, varS, var2S, var3S));
 
                 // txt_s.setText("" + op.s);
                 // txt_z.setText("" + op.z);
@@ -376,89 +367,49 @@ public class Janela extends JFrame {
         contentPane.add(btn_reiniciar);
         contentPane.add(btn_limpar);
 
-        JLabel lblHex = new JLabel("HEX");
-        lblHex.setBounds(535, 21, 46, 14);
-        contentPane.add(lblHex);
-
-        JLabel lblS1 = new JLabel("S1:");
-        lblS1.setBounds(500, 41, 19, 14);
-        contentPane.add(lblS1);
+        JLabel lblDec = new JLabel("DEC");
+        lblDec.setBounds(810, 21, 46, 14);
+        contentPane.add(lblDec);
 
         txt_s1 = new JTextField();
-        txt_s1.setBounds(529, 38, 46, 20);
+        txt_s1.setBounds(800, 38, 46, 20);
         contentPane.add(txt_s1);
         txt_s1.setColumns(10);
 
-        JLabel lblS2 = new JLabel("S2:");
-        lblS2.setBounds(500, 71, 19, 14);
-        contentPane.add(lblS2);
-
         txt_s2 = new JTextField();
-        txt_s2.setBounds(529, 68, 46, 20);
+        txt_s2.setBounds(800, 68, 46, 20);
         contentPane.add(txt_s2);
         txt_s2.setColumns(10);
 
-        JLabel lblS3 = new JLabel("S3:");
-        lblS3.setBounds(500, 104, 19, 14);
-        contentPane.add(lblS3); 
-
         txt_s3 = new JTextField();
-        txt_s3.setBounds(529, 101, 46, 20);
+        txt_s3.setBounds(800, 101, 46, 20);
         contentPane.add(txt_s3);
         txt_s3.setColumns(10);
 
-        JLabel lblS4 = new JLabel("S4:");
-        lblS4.setBounds(500, 135, 19, 14);
-        contentPane.add(lblS4);
-
         txt_s4 = new JTextField();
-        txt_s4.setBounds(529, 132, 46, 20);
+        txt_s4.setBounds(800, 132, 46, 20);
         contentPane.add(txt_s4);
         txt_s4.setColumns(10);        
 
-        JLabel lblDec = new JLabel("DEC");
-        lblDec.setBounds(610, 21, 46, 14);
-        contentPane.add(lblDec);
-
-        txt_s1dec = new JTextField();
-        txt_s1dec.setBounds(600, 38, 46, 20);
-        contentPane.add(txt_s1dec);
-        txt_s1dec.setColumns(10);
-
-        txt_s2dec = new JTextField();
-        txt_s2dec.setBounds(600, 68, 46, 20);
-        contentPane.add(txt_s2dec);
-        txt_s2dec.setColumns(10);
-
-        txt_s3dec = new JTextField();
-        txt_s3dec.setBounds(600, 101, 46, 20);
-        contentPane.add(txt_s3dec);
-        txt_s3dec.setColumns(10);
-
-        txt_s4dec = new JTextField();
-        txt_s4dec.setBounds(600, 132, 46, 20);
-        contentPane.add(txt_s4dec);
-        txt_s4dec.setColumns(10);        
-
         JLabel lblFlags = new JLabel("Flags");
-        lblFlags.setBounds(570, 163, 46, 14);
+        lblFlags.setBounds(770, 163, 46, 14);
         contentPane.add(lblFlags);
 
         JLabel lblS = new JLabel("S");
-        lblS.setBounds(557, 180, 25, 14);
+        lblS.setBounds(757, 180, 25, 14);
         contentPane.add(lblS);
 
         txt_s = new JTextField();
-        txt_s.setBounds(550, 196, 25, 20);
+        txt_s.setBounds(750, 196, 25, 20);
         contentPane.add(txt_s);
         txt_s.setColumns(10);        
 
         JLabel lblZ = new JLabel("Z");
-        lblZ.setBounds(608, 180, 19, 14);
+        lblZ.setBounds(808, 180, 19, 14);
         contentPane.add(lblZ);
 
         txt_z = new JTextField();
-        txt_z.setBounds(600, 196, 25, 20);
+        txt_z.setBounds(800, 196, 25, 20);
         contentPane.add(txt_z);
         txt_z.setColumns(10);
 
@@ -468,12 +419,12 @@ public class Janela extends JFrame {
 
         txt_maquina = new JTextArea();
         txt_maquina.setFont(new Font("Monospaced", Font.PLAIN, 12));
-        txt_maquina.setBounds(261, 36, 217, 419);
+        txt_maquina.setBounds(261, 36, 417, 419);
         contentPane.add(txt_maquina);
 
         txt_ciclos = new JTextArea();
         txt_ciclos.setFont(new Font("Monospaced", Font.PLAIN, 12));
-        txt_ciclos.setBounds(500, 236, 217, 219);
+        txt_ciclos.setBounds(700, 236, 217, 219);
         contentPane.add(txt_ciclos);
     }
 }
