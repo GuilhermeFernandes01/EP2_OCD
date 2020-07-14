@@ -260,24 +260,43 @@ public class Operacoes {
     public int beq(String reg, String comparador, String linha) {
         int numeroLinha = 0;
 
+        int valorComparador = 0;
+
+        switch (comparador) {
+            case "$s1":
+                valorComparador = getS1();
+                break;
+            case "$s2":
+                valorComparador = getS2();
+                break;
+            case "$s3":
+                valorComparador = getS3();
+                break;
+            case "$s4":
+                valorComparador = getS4();
+                break;
+            default:
+                break;
+        }
+
         switch (reg) {
             case "$s1":
-                if (getS1() == Integer.parseInt(comparador)) {
+                if (getS1() == valorComparador) {
                     numeroLinha = Integer.parseInt(linha);
                 }
                 break;
             case "$s2":
-                if (getS2() == Integer.parseInt(comparador)) {
+                if (getS2() == valorComparador) {
                     numeroLinha = Integer.parseInt(linha);
                 }
                 break;
             case "$s3":
-                if (getS3() == Integer.parseInt(comparador)) {
+                if (getS3() == valorComparador) {
                     numeroLinha = Integer.parseInt(linha);
                 }
                 break;
             case "$s4":
-                if (getS4() == Integer.parseInt(comparador)) {
+                if (getS4() == valorComparador) {
                     numeroLinha = Integer.parseInt(linha);
                 }
                 break;
@@ -291,24 +310,43 @@ public class Operacoes {
     public int bne(String reg, String comparador, String linha) {
         int numeroLinha = 0;
 
+        int valorComparador = 0;
+
+        switch (comparador) {
+            case "$s1":
+                valorComparador = getS1();
+                break;
+            case "$s2":
+                valorComparador = getS2();
+                break;
+            case "$s3":
+                valorComparador = getS3();
+                break;
+            case "$s4":
+                valorComparador = getS4();
+                break;
+            default:
+                break;
+        }
+
         switch (reg) {
             case "$s1":
-                if (getS1() != Integer.parseInt(comparador)) {
+                if (getS1() != valorComparador) {
                     numeroLinha = Integer.parseInt(linha);
                 }
                 break;
             case "$s2":
-                if (getS2() != Integer.parseInt(comparador)) {
+                if (getS2() != valorComparador) {
                     numeroLinha = Integer.parseInt(linha);
                 }
                 break;
             case "$s3":
-                if (getS3() != Integer.parseInt(comparador)) {
+                if (getS3() != valorComparador) {
                     numeroLinha = Integer.parseInt(linha);
                 }
                 break;
             case "$s4":
-                if (getS4() != Integer.parseInt(comparador)) {
+                if (getS4() != valorComparador) {
                     numeroLinha = Integer.parseInt(linha);
                 }
                 break;

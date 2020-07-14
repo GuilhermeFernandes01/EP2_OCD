@@ -232,33 +232,23 @@ public class Janela extends JFrame {
                 // System.out.println(var2S);
                 // System.out.println(var3S);                
 
-                if (insS.equals("add")) {//Comparar instru��es
+                // Instruções
+                if (insS.equals("add")) {
                     result = op.add(varS, var2S, var3S);
-                    txt_ciclos.setText(Ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao("add", varS, var2S));
                 } else if (insS.equals("sub")) {
                     result = op.sub(varS, var2S, var3S);
-                    // System.out.println("Resultado: " + result);
-                    // txt_ciclos.setText(ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao("sub", varS, var2S));
                 } else if (insS.equals("li")) {
                     result = op.li(varS, var2S);
-                    //System.out.println("Resultado: " + result);
                 } else if (insS.equals("mov")) {
                     result = op.mov(varS, var2S);
-                    // System.out.println("Resultado: " + result);
-                    // txt_ciclos.setText(ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao("mov", varS, var2S));
                 } else if (insS.equals("beq")) {
                     result = op.beq(varS, var2S, var3S);
                     i = result;
-                    // System.out.println("Linha atual: " + i);
-                    // System.out.println("Instrução atual: " + linhas[i]);
                 } else if (insS.equals("bne")) {
                     result = op.bne(varS, var2S, var3S);
                     i = result;
                 } else if (insS.equals("slt")) {
                     result = op.slt(varS, var2S, var3S);
-                } else if (insS.equals("cmp")) {
-                    // resultado = op.cmp(varS, var2S);
-                    txt_ciclos.setText("");
                 } else if (insS.equals("jmp")) {
                     // jump pra pular a linha ate achar a label
                     String label = varS;
@@ -341,6 +331,8 @@ public class Janela extends JFrame {
 
                 }
 
+                txt_ciclos.setText(Ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao(insS, varS, var2S, var3S));
+
                 txt_s1.setText("" + add_zero(Integer.toString(op.s1)));
 
                 txt_s2.setText("" + add_zero(Integer.toString(op.s2)));
@@ -351,7 +343,18 @@ public class Janela extends JFrame {
 
                 txt_maquina.append(op.traduz(insS, varS, var2S, var3S));
 
-                // txt_s.setText("" + op.s);
+                txt_s.setText("");
+                txt_z.setText("");
+
+                if (result < 0) {
+                    txt_s.setText("1");
+                } else if (result > 0) {
+                    txt_s.setText("0");
+                } else {
+                    txt_z.setText("1");
+                }
+                
+                
                 // txt_z.setText("" + op.z);
 
                 i++;//Pr�xima linha

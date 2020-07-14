@@ -1,5 +1,16 @@
 public class Ciclos {
 
+    private boolean ehNumero;
+
+    public boolean testaNumero(String testado) {
+        try {
+            Integer.parseInt(testado);
+            return true;
+        } catch (NumberFormatException e) {
+        }
+        return false;
+    }
+
     //Ciclo de Busca � igual em todos
     public static String CicloDeBusca() {
         return ("CICLO DE BUSCA:\n"
@@ -11,7 +22,7 @@ public class Ciclos {
                 + "T6:IR <- MBR\n");
     }
   
-    //Indirecao de p1
+    //Indirecao de reg1
     public static String CicloDeIndirecao1(String p) {
         String j = p;
         j = p.replace("[", " ");
@@ -24,7 +35,7 @@ public class Ciclos {
         //return p;
     }
   
-    //Indirecao de p2
+    //Indirecao de reg2
     public static String CicloDeIndirecao2(String p) {
         String j = p;
         j = p.replace("[", " ");
@@ -38,66 +49,78 @@ public class Ciclos {
     }
   
     //Ciclo de execucao, que � especifico de cada operacao
-    public String CicloDeExecucao(String operacao, String p1, String p2) {
+    public String CicloDeExecucao(String operacao, String reg1, String reg2, String reg3) {
         switch (operacao) {
             case "add":
-                return ("CICLO DE " + operacao.toUpperCase() + ":\n"
-                        + "T1:X <- " + p1.toUpperCase() + "\n"
-                        + "T2:ULA <- " + p2 + "(P2)\n"
-                        + "T3:AC <- ULA(" + p1.toUpperCase() + " + " + p2 + ")\n"
-                        + "T4:" + p1.toUpperCase() + " <- AC \n");
+                ehNumero = testaNumero(reg3);
+                if (!ehNumero) {
+                    return ("CICLO DE " + operacao.toUpperCase() + ":\n"
+                    + "T1:X <- " + reg2 + "\n"
+                    + "T2:ULA <- " + reg3 + "\n"
+                    + " AC <- ULA(" + reg2 + " + " + reg3 + ")\n"
+                    + "T3:" + reg1 + " <- AC \n");
+                } else {
+                    return ("CICLO DE " + operacao.toUpperCase() + ":\n"
+                    + "T1:X <- " + reg2 + "\n"
+                    + "T2:ULA <- " + reg3 + "(P1)" + "\n"
+                    + " AC <- ULA(" + reg2 + " + " + reg3 + ")\n"
+                    + "T3:" + reg1 + " <- AC \n");
+                }
             case "sub":
+                ehNumero = testaNumero(reg3);
+                if (!ehNumero) {
+                    return ("CICLO DE " + operacao.toUpperCase() + ":\n"
+                        + "T1:X <- " + reg2 + "\n"
+                        + "T2:ULA <- " + reg3 + "\n"
+                        + " AC <- ULA(" + reg2 + " - " + reg3 + ")\n"
+                        + "T3:" + reg1 + " <- AC \n");
+                } else {
+                    return ("CICLO DE " + operacao.toUpperCase() + ":\n"
+                        + "T1:X <- " + reg2 + "\n"
+                        + "T2:ULA <- " + reg3 + "(P1)\n"
+                        + " AC <- ULA(" + reg2 + " - " + reg3 + ")\n"
+                        + "T3:" + reg1 + " <- AC \n");
+                }
+            case "li":
                 return ("CICLO DE " + operacao.toUpperCase() + ":\n"
-                        + "T1:X <- " + p1.toUpperCase() + "\n"
-                        + "T2:ULA <- " + p2 + "(P2)\n"
-                        + "T3:AC <- ULA(" + p1 + " - " + p2 + ")\n"
-                        + "T4:" + p1.toUpperCase() + " <- AC \n");
-            case "div":
-                return ("CICLO DE " + operacao.toUpperCase() + ":\n"
-                        + "T1:X <- AX \n"
-                        + "T2:ULA <- " + p1.toUpperCase() + "\n"
-                        + "T3:AC <- ULA(AX / " + p1.toUpperCase() + ")\n"
-                        + "T4:AX <- AC \n"
-                        + "T5:ULA <-" + p1.toUpperCase() + "\n"
-                        + "T6:AC <- ULA(AX%" + p1.toUpperCase() + ")\n"
-                        + "T7:DX <- AC\n");
-            case "mul":
-                return ("CICLO DE " + operacao.toUpperCase() + ":\n"
-                        + "T1:X <- AX \n"
-                        + "T2:ULA <- " + p1.toUpperCase() + "\n"
-                        + "T3:AC <- ULA(AX * " + p1.toUpperCase() + ")\n"
-                        + "T4:AX <- AC \n"
-                        + "T5:DX <- AC \n"//se a multiplicacao tiver mais de 8 bits, o que excede vai pro DX
-                );
+                        + "T1:" + reg1 + " <- " + reg2 + "(P1)\n");
             case "mov":
                 return ("CICLO DE " + operacao.toUpperCase() + ":\n"
-                        + "T1:" + p1.toUpperCase() + " <- " + p2.toUpperCase() + "\n");
-            case "inc":
+                        + "T1:" + reg1 + " <- " + reg2 + "\n");
+            case "beq":
                 return ("CICLO DE " + operacao.toUpperCase() + ":\n"
-                        + "T1:ULA <- " + p1.toUpperCase() + "\n"
-                        + "T2:AC <- ULA(" + p1.toUpperCase() + "+1)\n"
-                        + "T3:" + p1.toUpperCase() + " <- AC \n");
-            case "dec":
+                        + "T1:X <- " + reg1 + "\n"
+                        + "T2:ULA <- " + reg2 + "\n"
+                        + " AC <- ULA (" + reg1 + "-" + reg2 + ") \n")
+                        + "T3:JUMP (if AC == 0)\n";
+            case "bne":
                 return ("CICLO DE " + operacao.toUpperCase() + ":\n"
-                        + "T1:ULA <- " + p1.toUpperCase() + "\n"
-                        + "T2:AC <- ULA(" + p1.toUpperCase() + "-1)\n"
-                        + "T3:" + p1.toUpperCase() + " <- AC \n");
+                    + "T1:X <- " + reg1 + "\n"
+                    + "T2:ULA <- " + reg2 + "\n"
+                    + " AC <- ULA (" + reg1 + "-" + reg2 + ") \n")
+                    + "T3:JUMP (if AC != 0)\n";
+            case "slt":
+                return ("CICLO DE " + operacao.toUpperCase() + ":\n"
+                        + "T1:X <- " + reg2 + "\n"
+                        + "T2:ULA <- " + reg3 + "\n"
+                        + "T3:AC <- ULA (" + reg2 + "<" + reg3 + ")\n"
+                        + " " + reg1 + " <- AC\n");
             default:
         }
         return "";
     }
   
     //Aqui juntei todos os metodos em 1 s�, que contem o ciclo de busca, indirecao e execucao
-    /*public static String TelaDePrint(String op, String p1, String p2) {
+    /*public static String TelaDePrint(String op, String reg1, String reg2) {
         CicloDeBusca();
-        if ((p1.contains("[")) && (p1.contains("]"))) {
-            p1 = CicloDeIndirecao1(p1);
-            CicloDeExecucao(op, "P1", p2);
-        } else if ((p2.contains("[")) && (p2.contains("]"))) {
-            p2 = CicloDeIndirecao2(p2);
-            CicloDeExecucao(op, p1, "P2");
+        if ((reg1.contains("[")) && (reg1.contains("]"))) {
+            reg1 = CicloDeIndirecao1(reg1);
+            CicloDeExecucao(op, "P1", reg2);
+        } else if ((reg2.contains("[")) && (reg2.contains("]"))) {
+            reg2 = CicloDeIndirecao2(reg2);
+            CicloDeExecucao(op, reg1, "P2");
         } else {
-            CicloDeExecucao(op, p1, p2);
+            CicloDeExecucao(op, reg1, reg2);
         }
     }*/
   
