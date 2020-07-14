@@ -14,12 +14,12 @@ public class Ciclos {
     //Ciclo de Busca � igual em todos
     public static String CicloDeBusca() {
         return ("CICLO DE BUSCA:\n"
-                + "T1:MAR <- PC \n"
-                + "T2:MBR <- memoria \n"
-                + "T3:ULA <- PC \n"
-                + "T4:AC <- ULA \n"
-                + "T5:PC <- AC \n"
-                + "T6:IR <- MBR\n");
+            + "T1:MAR <- PC \n"
+            + " ULA <- PC\n"
+            + "T2:MBR <- memória \n"
+            + " PC <- AC \n"
+            + "T3:AC <- ULA \n"
+            + "T4:IR <- MBR \n");
     }
   
     //Indirecao de reg1
