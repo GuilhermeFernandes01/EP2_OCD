@@ -1,10 +1,10 @@
 public class Estrutura {
   private String endereco;
-  private String conteudo;
+  private String palavra;
 
-  public Estrutura(String endereco, String conteudo) {
+  public Estrutura(String endereco, String palavra) {
     this.endereco = endereco;
-    this.conteudo = conteudo;
+    this.palavra = palavra;
   }
 
   public String getEndereco() {
@@ -15,11 +15,11 @@ public class Estrutura {
     this.endereco = endereco;
   }
 
-  public String getConteudo() {
-    return conteudo;
+  public String getpalavra() {
+    return palavra;
   }
 
-  public void setConteudo(String conteudo) {
-    this.conteudo = conteudo;
+  public void setpalavra(String palavra) {
+    this.palavra = palavra;
   }
 }
