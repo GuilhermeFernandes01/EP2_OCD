@@ -373,20 +373,36 @@ public class Janela extends JFrame {
         lblDec.setBounds(810, 21, 46, 14);
         contentPane.add(lblDec);
 
+        JLabel lbl_s1 = new JLabel("s1");
+        lbl_s1.setBounds(770, 40, 46, 14);
+        contentPane.add(lbl_s1);
+
         txt_s1 = new JTextField();
         txt_s1.setBounds(800, 38, 46, 20);
         contentPane.add(txt_s1);
         txt_s1.setColumns(10);
+
+        JLabel lbl_s2 = new JLabel("s2");
+        lbl_s2.setBounds(770, 70, 46, 14);
+        contentPane.add(lbl_s2);
 
         txt_s2 = new JTextField();
         txt_s2.setBounds(800, 68, 46, 20);
         contentPane.add(txt_s2);
         txt_s2.setColumns(10);
 
+        JLabel lbl_s3 = new JLabel("s3");
+        lbl_s3.setBounds(770, 103, 46, 14);
+        contentPane.add(lbl_s3);
+
         txt_s3 = new JTextField();
         txt_s3.setBounds(800, 101, 46, 20);
         contentPane.add(txt_s3);
         txt_s3.setColumns(10);
+
+        JLabel lbl_s4 = new JLabel("s4");
+        lbl_s4.setBounds(770, 135, 46, 14);
+        contentPane.add(lbl_s4);
 
         txt_s4 = new JTextField();
         txt_s4.setBounds(800, 132, 46, 20);
@@ -394,24 +410,24 @@ public class Janela extends JFrame {
         txt_s4.setColumns(10);        
 
         JLabel lblFlags = new JLabel("Flags");
-        lblFlags.setBounds(770, 163, 46, 14);
+        lblFlags.setBounds(805, 163, 46, 14);
         contentPane.add(lblFlags);
 
         JLabel lblS = new JLabel("S");
-        lblS.setBounds(757, 180, 25, 14);
+        lblS.setBounds(780, 180, 25, 14);
         contentPane.add(lblS);
 
         txt_s = new JTextField();
-        txt_s.setBounds(750, 196, 25, 20);
+        txt_s.setBounds(775, 196, 25, 20);
         contentPane.add(txt_s);
         txt_s.setColumns(10);        
 
         JLabel lblZ = new JLabel("Z");
-        lblZ.setBounds(808, 180, 19, 14);
+        lblZ.setBounds(848, 180, 19, 14);
         contentPane.add(lblZ);
 
         txt_z = new JTextField();
-        txt_z.setBounds(800, 196, 25, 20);
+        txt_z.setBounds(840, 196, 25, 20);
         contentPane.add(txt_z);
         txt_z.setColumns(10);
 
