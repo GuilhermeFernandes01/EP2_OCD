@@ -24,9 +24,8 @@ public class Ciclos {
   
     //Indirecao de reg1
     public static String CicloDeIndirecao1(String p) {
-        String j = p;
-        j = p.replace("[", " ");
-        j = p.replace("]", " ");
+        p.replace("[", " ");
+        p.replace("]", " ");
         return ("CICLO DE INDIRECAO:\n"
                 + "T1:MAR <-" + p.toUpperCase() + "\n"
                 + "T2:MBR <- memoria \n"
@@ -37,9 +36,8 @@ public class Ciclos {
   
     //Indirecao de reg2
     public static String CicloDeIndirecao2(String p) {
-        String j = p;
-        j = p.replace("[", " ");
-        j = p.replace("]", " ");
+        p.replace("[", " ");
+        p.replace("]", " ");
         return ("CICLO DE INDIRECAO:\n"
                 + "T1:MAR <-" + p.toUpperCase() + "\n"
                 + "T2:MBR <- memoria \n"

@@ -453,7 +453,6 @@ public class Operacoes {
         arrayPulo = zeraArray(arrayPulo);
         arrayEnderecoPulo = zeraArray(arrayEnderecoPulo);
 
-        String textoOperacao = "";
         String palavra = "";
 
         switch (operacao) {
@@ -478,10 +477,8 @@ public class Operacoes {
                 }                
                 break;
             case "lw":
-                textoOperacao = "0001";
                 break;
             case "sw":
-                textoOperacao = "0010";
                 break;
             case "mov":
                 arrayOpCodes[3-1] = 1;
@@ -523,13 +520,10 @@ public class Operacoes {
 
                 break;
             case "beq":
-                textoOperacao = "1000";
                 break;
             case "bne":
-                textoOperacao = "1001";
                 break;
             case "j":
-                textoOperacao = "1010";
                 break;
             case "slt":
                 arrayOpCodes[1-1] = 1;
