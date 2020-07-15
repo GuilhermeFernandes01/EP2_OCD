@@ -86,7 +86,7 @@ public class Janela extends JFrame {
     /* M�todo que retorna uma String a partir de uma ArrayList */
     public String retornaString(ArrayList<String> aux) {
         String x = "";
-        int y = 0;
+        //int y = 0;
 
         for (int b = 0; b < aux.size(); b++) {
             x += aux.get(b);
@@ -194,7 +194,7 @@ public class Janela extends JFrame {
                 ArrayList<String> var = new ArrayList<String>();//ArrayList das vari�veis
                 ArrayList<String> var2 = new ArrayList<String>();
                 ArrayList<String> var3 = new ArrayList<String>();
-                String insS, varS, var2S, var3S, resultado;
+                String insS, varS, var2S, var3S;
                 int result = 0;
 
                 String aux = linhas[i];//i = contador de cliques no bot�o, ou seja, executa a linha em quest�o
@@ -251,7 +251,7 @@ public class Janela extends JFrame {
                     result = op.slt(varS, var2S, var3S);
                 } else if (insS.equals("jmp")) {
                     // jump pra pular a linha ate achar a label
-                    String label = varS;
+                    // String label = varS;
 
                     for (int a = i; a < linhas.length; a++) {
                         if (linhas[a].contains(varS) == true) {
