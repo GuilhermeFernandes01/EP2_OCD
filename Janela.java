@@ -119,6 +119,21 @@ public class Janela extends JFrame {
         txt_maquina.setText("");
     }
 
+    public String verificaVariavel(String variavel) {
+        switch (variavel) {
+            case "$s1":
+                return "00";
+            case "$s2":
+                return "01";
+            case "$s3":
+                return "10";
+            case "$s4":
+                return "11";
+            default:
+                return "";
+        }
+    }
+
     /**
      * Create the frame.
      */
@@ -331,29 +346,87 @@ public class Janela extends JFrame {
 
                 }
 
-                txt_ciclos.setText(Ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao(insS, varS, var2S, var3S));
+                
 
-                txt_s1.setText("" + add_zero(Integer.toString(op.s1)));
+                String traduzido = op.traduz(insS, varS, var2S, var3S);
 
-                txt_s2.setText("" + add_zero(Integer.toString(op.s2)));
+                int proximaLinha = i + 1;
 
-                txt_s3.setText("" + add_zero(Integer.toString(op.s3)));
+                String opCode = traduzido.split(" ")[1];                
 
-                txt_s4.setText("" + add_zero(Integer.toString(op.s4)));
+                String palavraReg1 = "", palavraReg2 = "", palavraReg3 = "";
+                
+                palavraReg1 = verificaVariavel(varS);
+                palavraReg2 = verificaVariavel(var2S);
+                palavraReg3 = verificaVariavel(var3S);
 
-                txt_maquina.append(op.traduz(insS, varS, var2S, var3S));
+                int numeroReg2 = 0, numeroReg3 = 0;
+
+                try {
+                    numeroReg2 = Integer.parseInt(var2S);
+                    palavraReg2 = Integer.toBinaryString(numeroReg2);
+                } catch (NumberFormatException e) {
+                }
+
+                try {
+                    numeroReg3 = Integer.parseInt(var3S);
+                    palavraReg3 = Integer.toBinaryString(numeroReg3);
+                } catch (NumberFormatException e) {
+                }
+
+                String palavraSemEspaco = "";
+                if (palavraReg3.equals("")) {
+                    palavraSemEspaco = opCode + palavraReg1;
+                } else {
+                    palavraSemEspaco = opCode + palavraReg1 + palavraReg2 + palavraReg3;
+                }
 
                 txt_s.setText("");
                 txt_z.setText("");
 
-                if (result < 0) {
-                    txt_s.setText("1");
-                } else if (result > 0) {
-                    txt_s.setText("0");
+                int totalZerosPalavra = 32 - palavraSemEspaco.length();
+                String zeros = new String(new char[32 - totalZerosPalavra - palavraSemEspaco.length()]).replace("\0", "0");
+                if (numeroReg2 > Math.pow(2, totalZerosPalavra) - 1
+                    || numeroReg3 > Math.pow(2, totalZerosPalavra) - 1) {
+                    JOptionPane.showMessageDialog(null, "Numero maior que a quantidade de bits disponivel");
+                    return;
                 } else {
-                    txt_z.setText("1");
+                    txt_maquina.append(traduzido);
+
+                    txt_ciclos.setText(Ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao(insS, varS, var2S, var3S));
+
+                    txt_s1.setText("" + add_zero(Integer.toString(op.s1)));
+
+                    txt_s2.setText("" + add_zero(Integer.toString(op.s2)));
+
+                    txt_s3.setText("" + add_zero(Integer.toString(op.s3)));
+
+                    txt_s4.setText("" + add_zero(Integer.toString(op.s4)));
+
+                    if (result < 0) {
+                        txt_s.setText("1");
+                    } else if (result > 0 && !insS.equals("beq")) {
+                        txt_s.setText("0");
+                    } else {
+                        txt_z.setText("1");
+                    }
                 }
                 
+                String palavra = "";
+                if (palavraReg3.equals("")) {
+                    palavra = opCode + " " + palavraReg1 + " " + palavraReg2 + palavraReg3 + " " + zeros;
+                } else {
+                    palavra = opCode + " " + palavraReg1 + " " + palavraReg2 + " " + palavraReg3 + " " + zeros;
+                }
+                
+                System.out.println("palavra: " + palavra);
+
+                Estrutura elemento = new Estrutura(palavra, proximaLinha + "");
+
+                list.add(elemento);
+
+                System.out.println(elemento.getpalavra());
+                System.out.println(elemento.getEndereco());
                 
                 // txt_z.setText("" + op.z);
 

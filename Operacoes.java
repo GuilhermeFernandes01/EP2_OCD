@@ -520,10 +520,162 @@ public class Operacoes {
 
                 break;
             case "beq":
+                arrayOpCodes[1-1] = 1;
+                arraySinaisControle[21-1] = 1;
+
+                switch (reg2) {
+                    case "$s1":
+                        arraySinaisControle[7-1] = 1;
+                        break;
+                    case "$s2":
+                        arraySinaisControle[9-1] = 1;
+                        break;
+                    case "$s3":
+                        arraySinaisControle[11-1] = 1;
+                        break;
+                    case "$s4":
+                        arraySinaisControle[13-1] = 1;
+                        break;
+                    default:
+                        break;
+                }
+
+                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
+                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
+                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
+
+                arraySinaisControle = zeraArray(arraySinaisControle);
+                arraySinaisControle[22-1] = 1;
+
+                switch (reg1) {
+                    case "$s1":
+                        arraySinaisControle[7-1] = 1;
+                        break;
+                    case "$s2":
+                        arraySinaisControle[9-1] = 1;
+                        break;
+                    case "$s3":
+                        arraySinaisControle[11-1] = 1;
+                        break;
+                    case "$s4":
+                        arraySinaisControle[13-1] = 1;
+                        break;
+                    default:
+                        break;
+                }
+
+                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
+                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
+                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
+                
+                arraySinaisControle = zeraArray(arraySinaisControle);
+                arrayPulo[1-1] = 1;
+
+                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
+                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
+                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
+                
+                arraySinaisControle[28-1] = 1;
+                arraySinaisControle[26-1] = 1;
+                arraySinaisControle[5-1] = 1;
+                arraySinaisControle[1-1] = 1;
+
+                arrayOpCodes = zeraArray(arrayOpCodes);
+                arrayOpCodes[1-1] = 1;
+                arrayOpCodes[3-1] = 1;
                 break;
             case "bne":
+                arrayOpCodes[1-1] = 1;
+                arrayOpCodes[4-1] = 1;
+                arraySinaisControle[21-1] = 1;
+
+                int valueReg1 = 0, valueReg2 = 0;
+
+                switch (reg2) {
+                    case "$s1":
+                        arraySinaisControle[7-1] = 1;
+                        valueReg2 = getS1();
+                        break;
+                    case "$s2":
+                        arraySinaisControle[9-1] = 1;
+                        valueReg2 = getS2();
+                        break;
+                    case "$s3":
+                        arraySinaisControle[11-1] = 1;
+                        valueReg2 = getS3();
+                        break;
+                    case "$s4":
+                        arraySinaisControle[13-1] = 1;
+                        valueReg2 = getS4();
+                        break;
+                    default:
+                        break;
+                }
+
+                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
+                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
+                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
+
+                arraySinaisControle = zeraArray(arraySinaisControle);
+                arraySinaisControle[22-1] = 1;
+
+                switch (reg1) {
+                    case "$s1":
+                        arraySinaisControle[7-1] = 1;
+                        valueReg1 = getS1();
+                        break;
+                    case "$s2":
+                        arraySinaisControle[9-1] = 1;
+                        valueReg1 = getS2();
+                        break;
+                    case "$s3":
+                        arraySinaisControle[11-1] = 1;
+                        valueReg1 = getS3();
+                        break;
+                    case "$s4":
+                        arraySinaisControle[13-1] = 1;
+                        valueReg1 = getS4();
+                        break;
+                    default:
+                        break;
+                }
+
+                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
+                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
+                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
+                
+                arraySinaisControle = zeraArray(arraySinaisControle);
+
+                if (valueReg1 - valueReg2 < 0) {
+                    arrayPulo[2-1] = 1;
+                } else {
+                    arrayPulo[2-1] = 0;
+                }
+
+                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
+                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
+                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
+                
+                arraySinaisControle[28-1] = 1;
+                arraySinaisControle[26-1] = 1;
+                arraySinaisControle[5-1] = 1;
+                arraySinaisControle[1-1] = 1;
+
+                arrayOpCodes = zeraArray(arrayOpCodes);
+                arrayOpCodes[1-1] = 1;
+                arrayOpCodes[3-1] = 1;
                 break;
             case "j":
+                arraySinaisControle[28-1] = 1;
+                arraySinaisControle[26-1] = 1;
+                arraySinaisControle[5-1] = 1;
+                arraySinaisControle[1-1] = 1;
+
+                arrayOpCodes[1-1] = 1;
+                arrayOpCodes[3-1] = 1;
+
+                arrayPulo[1-1] = 1;
+                arrayPulo[2-1] = 1;
                 break;
             case "slt":
                 arrayOpCodes[1-1] = 1;
@@ -548,7 +700,7 @@ public class Operacoes {
                         break;
                 }
 
-                palavra = arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
+                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
                     + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
                     + " " + arrayToString(arrayEnderecoPulo) + "\n";
 
@@ -867,9 +1019,8 @@ public class Operacoes {
         }
 
         palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
-
+            + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
+            + " " + arrayToString(arrayEnderecoPulo) + "\n";
         return palavra;
     }
     
