@@ -376,6 +376,7 @@ public class Janela extends JFrame {
         txt_s1.setBounds(800, 38, 46, 20);
         contentPane.add(txt_s1);
         txt_s1.setColumns(10);
+        txt_s1.setEditable(false);
 
         JLabel lbl_s2 = new JLabel("s2");
         lbl_s2.setBounds(770, 70, 46, 14);
@@ -385,6 +386,7 @@ public class Janela extends JFrame {
         txt_s2.setBounds(800, 68, 46, 20);
         contentPane.add(txt_s2);
         txt_s2.setColumns(10);
+        txt_s2.setEditable(false);
 
         JLabel lbl_s3 = new JLabel("s3");
         lbl_s3.setBounds(770, 103, 46, 14);
@@ -394,6 +396,7 @@ public class Janela extends JFrame {
         txt_s3.setBounds(800, 101, 46, 20);
         contentPane.add(txt_s3);
         txt_s3.setColumns(10);
+        txt_s3.setEditable(false);
 
         JLabel lbl_s4 = new JLabel("s4");
         lbl_s4.setBounds(770, 135, 46, 14);
@@ -403,6 +406,7 @@ public class Janela extends JFrame {
         txt_s4.setBounds(800, 132, 46, 20);
         contentPane.add(txt_s4);
         txt_s4.setColumns(10);
+        txt_s4.setEditable(false);
 
         JLabel lblFlags = new JLabel("Flags");
         lblFlags.setBounds(805, 163, 46, 14);
@@ -416,6 +420,7 @@ public class Janela extends JFrame {
         txt_s.setBounds(775, 196, 25, 20);
         contentPane.add(txt_s);
         txt_s.setColumns(10);
+        txt_s.setEditable(false);
 
         JLabel lblZ = new JLabel("Z");
         lblZ.setBounds(848, 180, 19, 14);
@@ -425,6 +430,7 @@ public class Janela extends JFrame {
         txt_z.setBounds(840, 196, 25, 20);
         contentPane.add(txt_z);
         txt_z.setColumns(10);
+        txt_z.setEditable(false);
 
         txt_cod = new JTextArea();
         txt_cod.setBounds(10, 36, 240, 419);
@@ -433,11 +439,13 @@ public class Janela extends JFrame {
         txt_maquina = new JTextArea();
         txt_maquina.setFont(new Font("Monospaced", Font.PLAIN, 12));
         txt_maquina.setBounds(261, 36, 417, 419);
+        txt_maquina.setEditable(false);
         contentPane.add(txt_maquina);
 
         txt_ciclos = new JTextArea();
         txt_ciclos.setFont(new Font("Monospaced", Font.PLAIN, 12));
         txt_ciclos.setBounds(700, 236, 217, 219);
+        txt_ciclos.setEditable(false);
         contentPane.add(txt_ciclos);
     }
 }
