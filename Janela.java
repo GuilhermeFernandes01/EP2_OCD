@@ -140,12 +140,12 @@ public class Janela extends JFrame {
         contentPane.add(lblciclos);
 
         btn_rodar = new JButton("Rodar");
-        btn_rodar.setBounds(330, 505, 89, 23);
+        btn_rodar.setBounds(425, 485, 100, 30);
 
         btn_reiniciar = new JButton("Reiniciar");
-        btn_reiniciar.setBounds(230, 515, 89, 23);
+        btn_reiniciar.setBounds(315, 515, 100, 25);
         btn_limpar = new JButton("Limpar");
-        btn_limpar.setBounds(430, 515, 89, 23);
+        btn_limpar.setBounds(535, 515, 100, 25);
 
         btn_reiniciar.addActionListener(new ActionListener() {
 
