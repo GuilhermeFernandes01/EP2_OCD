@@ -9,41 +9,40 @@ import java.util.List;
 
 public class Janela extends JFrame {
 
-    private JPanel contentPane;
-    static JTextField txt_s1;
+    private static JPanel contentPane;
+
+    private static JTextField txt_s1;
     private static JTextField txt_s2;
     private static JTextField txt_s3;
-    static JTextField txt_s4;
+    private static JTextField txt_s4;
+    private static JTextField txt_s;
+    private static JTextField txt_z;
+    private static JTextArea txt_cod;
+    private static JTextArea txt_maquina;
+    private static JTextArea txt_ciclos;
+
     private static JButton btn_rodar;
     private static JButton btn_reiniciar;
     private static JButton btn_limpar;
-    private JTextArea txt_cod;
-    private JTextArea txt_maquina;
-    private JTextArea txt_ciclos;
     
-
     private static final long serialVersionUID = 42L;
 
     public int i = 0;
     Operacoes op = new Operacoes();
     Ciclos ciclos = new Ciclos();
-    private static JTextField txt_s;
-    private static JTextField txt_z;
-    // ArrayList<Label_jmp> array_label = new ArrayList<Label_jmp>();
+   
 
-    /**
-     * Launch the application.
-     */
+    // Roda a aplicação
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
                     Janela janela = new Janela();
                     janela.setVisible(true);
-                    txt_s1.setText("0000");
-                    txt_s2.setText("0000");
-                    txt_s3.setText("0000");
-                    txt_s4.setText("0000");
+                    txt_s1.setText("0");
+                    txt_s2.setText("0");
+                    txt_s3.setText("0");
+                    txt_s4.setText("0");
                     txt_z.setText("");
                     txt_s.setText("");
                 } catch (Exception e) {
@@ -51,21 +50,6 @@ public class Janela extends JFrame {
                 }
             }
         });
-    }
-
-    public int volta_linha_array(String l, int linha_jump) {
-        int retorno_linha = -1;
-
-        // for (Label_jmp s : array_label) {
-        //     if (l.equals(s.get_label())) {
-        //         retorno_linha = s.get_label_linha();
-
-        //         /// procura no array a linha de acordo com a label do jnz
-        //         s.set_label_linha_jump(linha_jump);
-
-        //     }
-        // }
-        return retorno_linha;
     }
 
     public static String add_zero(String l) {
@@ -83,10 +67,9 @@ public class Janela extends JFrame {
         return l;
     }
 
-    /* M�todo que retorna uma String a partir de uma ArrayList */
+    // Retorna uma String a partir de uma ArrayList */
     public String retornaString(ArrayList<String> aux) {
         String x = "";
-        //int y = 0;
 
         for (int b = 0; b < aux.size(); b++) {
             x += aux.get(b);
@@ -96,11 +79,10 @@ public class Janela extends JFrame {
     }
 
     public void limpar() {
-        // zera o contador das linhas
+        // Zera o contador das linhas
         i = 0;
-        // zera o array dos jmps das labels
-        // array_label.clear();
-        // zera todos os campos de texto
+
+        // Zera todos os campos de texto
         txt_s1.setText("0000");
         txt_s2.setText("0000");
         txt_s3.setText("0000");
@@ -108,17 +90,16 @@ public class Janela extends JFrame {
         txt_z.setText("");
         txt_s.setText("");
 
-        // zera todas as variaveis
+        // Zera todas as variáveis
         op.setS1(0);
         op.setS2(0);
         op.setS3(0);
         op.setS4(0);
-        // op.setS("");
-        // op.setZ("");
         txt_ciclos.setText("");
         txt_maquina.setText("");
     }
 
+    // Retorna o opcode da variável
     public String verificaVariavel(String variavel) {
         switch (variavel) {
             case "$s1":
@@ -134,10 +115,9 @@ public class Janela extends JFrame {
         }
     }
 
-    /**
-     * Create the frame.
-     */
+    // Cria o Frame
     public Janela() {
+        // Configurações da Janela
         setTitle("Interpretador de Assembly");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1000, 605);
@@ -177,7 +157,6 @@ public class Janela extends JFrame {
 
             }
         });
-
 
         btn_limpar.addActionListener(new ActionListener() {
 
