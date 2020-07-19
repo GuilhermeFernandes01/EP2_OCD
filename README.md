@@ -11,7 +11,7 @@ Uma interface gráfica que permite o usuário digitar código em Assembly e esse
 Licença MIT. Mais detalhes em [LICENSE](LICENSE.md)
 
 ## :trophy: Como rodar
-$ javac *.java
+$ javac *.java  
 $ java Janela
 
 ---
