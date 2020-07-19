@@ -244,8 +244,8 @@ public class Janela extends JFrame {
                     result = op.sub(reg1, reg2, reg3);
                 } else if (operacao.equals("li")) {
                     result = op.li(reg1, reg2);
-                } else if (operacao.equals("mov")) {
-                    result = op.mov(reg1, reg2);
+                } else if (operacao.equals("move")) {
+                    result = op.move(reg1, reg2);
                 } else if (operacao.equals("beq")) {
                     result = op.beq(reg1, reg2, reg3);
                     i = result;

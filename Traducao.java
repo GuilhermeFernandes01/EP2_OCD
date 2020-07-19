@@ -71,7 +71,7 @@ public class Traducao extends Operacoes {
             break;
         }
         break;
-      case "mov":
+      case "move":
         arrayOpCodes[3 - 1] = 1;
         arrayOpCodes[4 - 1] = 1;
 

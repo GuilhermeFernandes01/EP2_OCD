@@ -43,7 +43,7 @@ public class Ciclos {
                 }
             case "li":
                 return ("CICLO DE " + operacao.toUpperCase() + ":\n" + "T1:" + reg1 + " <- " + reg2 + "(P1)\n");
-            case "mov":
+            case "move":
                 return ("CICLO DE " + operacao.toUpperCase() + ":\n" + "T1:" + reg1 + " <- " + reg2 + "\n");
             case "beq":
                 return ("CICLO DE " + operacao.toUpperCase() + ":\n" + "T1:X <- " + reg1 + "\n" + "T2:ULA <- " + reg2

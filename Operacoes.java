@@ -210,7 +210,7 @@ public class Operacoes {
         return valueReg;
     }
 
-    public int mov(String destino, String origem) {
+    public int move(String destino, String origem) {
         int valueOrigem = 0;
         int valueDestino = 0;
 
