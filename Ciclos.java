@@ -14,7 +14,7 @@ public class Ciclos {
 
     // Ciclo de busca
     public static String CicloDeBusca() {
-        return ("CICLO DE BUSCA:\n" + "T1:MAR <- PC \n" + " ULA <- PC\n" + "T2:MBR <- memória \n" + " PC <- AC \n"
+        return ("CICLO DE BUSCA:\n" + "T1:MAR <- PC \n" + " ULA <- PC\n" + "T2:MBR <- mem\u00f3ria \n" + " PC <- AC \n"
                 + "T3:AC <- ULA \n" + "T4:IR <- MBR \n");
     }
 
