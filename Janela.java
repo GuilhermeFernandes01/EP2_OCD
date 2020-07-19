@@ -138,7 +138,7 @@ public class Janela extends JFrame {
      * Create the frame.
      */
     public Janela() {
-        setTitle("Interpretador de Assembly ");
+        setTitle("Interpretador de Assembly");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1000, 605);
         setLocationRelativeTo(null);
@@ -194,186 +194,130 @@ public class Janela extends JFrame {
         btn_rodar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
 
+                // Cada posição do array representa uma linha
+                String[] linhas = txt_cod.getText().split("\n");
 
-                String[] linhas = txt_cod.getText().split("\n");//Cada posi��o do array = 1 linha
-                List<Estrutura> list = new LinkedList<>();
-                Estrutura test = new Estrutura("test", "test");
-                list.add(test);
+                // Lista ligada da estrutura das palavras
+                List<Estrutura> estruturaPalavras = new LinkedList<>();
 
+                // ArrayList da estrutura dos ciclos
+                List<String> estruturaCiclos = new ArrayList<>();
+
+                // Valida se não houve entrada
                 if (linhas[0].equals("")) {
                     JOptionPane.showMessageDialog(null, "Digite o c\u00f3digo");
                     return;
                 }
 
-                ArrayList<String> ins = new ArrayList<String>();//ArrayList da instru��o
-                ArrayList<String> var = new ArrayList<String>();//ArrayList das vari�veis
-                ArrayList<String> var2 = new ArrayList<String>();
-                ArrayList<String> var3 = new ArrayList<String>();
-                String insS, varS, var2S, var3S;
+                // Operação
+                ArrayList<String> listOperacao = new ArrayList<String>();
+
+                // ArrayList do primeiro registrador
+                ArrayList<String> reg1List = new ArrayList<String>();
+
+                // ArrayList do segundo registrador ou valor
+                ArrayList<String> reg2List = new ArrayList<String>();
+
+                // ArrayList do terceiro registrador ou valor
+                ArrayList<String> reg3List = new ArrayList<String>();
+                String operacao, reg1, reg2, reg3;
                 int result = 0;
 
-                String aux = linhas[i];//i = contador de cliques no bot�o, ou seja, executa a linha em quest�o
-                ArrayList<String> txt = new ArrayList<String>();
-                for (int j = 0; j < aux.length(); j++) {//Cria arraylist dos caracteres da linha
+                // i é o contador de cliques no botão
+                String aux = linhas[i];
+                ArrayList<String> texto = new ArrayList<String>();
+
+                // ArrayList dos caracteres da linha
+                for (int j = 0; j < aux.length(); j++) {
                     char x = aux.charAt(j);
-                    txt.add(String.valueOf(x));
+                    texto.add(String.valueOf(x));
                 }
                 
-                String[] str = new String[txt.size()];
-                txt.toArray(str);
-                
+                String[] linha = new String[texto.size()];
+                texto.toArray(linha);
+
+                // Separa a linha nas variáveis que precisamos
                 int encontrou = 0;
-                for (int i = 0; i < str.length; i++) {
-                    if (encontrou == 0 && !str[i].equals(" ")) {
-                        ins.add(str[i]);
-                    } else if (encontrou == 1 && !str[i].equals(",")) {
-                        var.add(str[i]);
-                    } else if (encontrou == 3 && !str[i].equals(",")) {
-                        var2.add(str[i]);
+                for (int i = 0; i < linha.length; i++) {
+                    if (encontrou == 0 && !linha[i].equals(" ")) {
+                        listOperacao.add(linha[i]);
+                    } else if (encontrou == 1 && !linha[i].equals(",")) {
+                        reg1List.add(linha[i]);
+                    } else if (encontrou == 3 && !linha[i].equals(",")) {
+                        reg2List.add(linha[i]);
                     } else if (encontrou == 5) {
-                        var3.add(str[i]);
-                    } else if (str[i].equals(" ") || str[i].equals(",")) {
+                        reg3List.add(linha[i]);
+                    } else if (linha[i].equals(" ") || linha[i].equals(",")) {
                         encontrou++;
                     }
                 }            
 
-                insS = retornaString(ins);
-                varS = retornaString(var);
-                var2S = retornaString(var2);
-                var3S = retornaString(var3);
-
-                // System.out.println(insS);
-                // System.out.println(varS);
-                // System.out.println(var2S);
-                // System.out.println(var3S);                
+                // Torna em String as listas que tínhamos
+                operacao = retornaString(listOperacao);
+                reg1 = retornaString(reg1List);
+                reg2 = retornaString(reg2List);
+                reg3 = retornaString(reg3List);    
 
                 // Instruções
-                if (insS.equals("add")) {
-                    result = op.add(varS, var2S, var3S);
-                } else if (insS.equals("sub")) {
-                    result = op.sub(varS, var2S, var3S);
-                } else if (insS.equals("li")) {
-                    result = op.li(varS, var2S);
-                } else if (insS.equals("mov")) {
-                    result = op.mov(varS, var2S);
-                } else if (insS.equals("beq")) {
-                    result = op.beq(varS, var2S, var3S);
+                if (operacao.equals("add")) {
+                    result = op.add(reg1, reg2, reg3);
+                } else if (operacao.equals("sub")) {
+                    result = op.sub(reg1, reg2, reg3);
+                } else if (operacao.equals("li")) {
+                    result = op.li(reg1, reg2);
+                } else if (operacao.equals("mov")) {
+                    result = op.mov(reg1, reg2);
+                } else if (operacao.equals("beq")) {
+                    result = op.beq(reg1, reg2, reg3);
                     i = result;
-                } else if (insS.equals("bne")) {
-                    result = op.bne(varS, var2S, var3S);
+                } else if (operacao.equals("bne")) {
+                    result = op.bne(reg1, reg2, reg3);
                     i = result;
-                } else if (insS.equals("slt")) {
-                    result = op.slt(varS, var2S, var3S);
-                } else if (insS.equals("jmp")) {
-                    // jump pra pular a linha ate achar a label
-                    // String label = varS;
-
+                } else if (operacao.equals("slt")) {
+                    result = op.slt(reg1, reg2, reg3);
+                } else if (operacao.equals("jmp")) {
                     for (int a = i; a < linhas.length; a++) {
-                        if (linhas[a].contains(varS) == true) {
+                        if (linhas[a].contains(reg1) == true) {
                             i = a;
                             System.out.println(linhas[i + 1]);
                         }
-
                     }
+
                     txt_ciclos.setText("");
-                } else if (insS.equals("jnz")) {
-                    // if (op.z != "�") {
-                    //     // sempre verificar se na linha anterior o ins era um cmp 
-                    //     // linha da label que esta depois do jnz 
-
-                    //     // buscar a linha no array e setar 
-                    //     // volta pra linha da label sempre para continuar at� a flag ser 0 
-                    //     i = volta_linha_array(varS, i);
-                    // }
-                    txt_ciclos.setText("");
-                } else if (insS.equals("jz")) {
-                    // if (op.z == "�") {
-
-                    //     String label = varS;
-
-                    //     for (int a = i; a < linhas.length; a++) {
-                    //         if (linhas[a].contains(varS) == true) {
-                    //             i = a;
-                    //             System.out.println(linhas[i + 1]);
-                    //         }
-                    //     }
-                    // }
-                    txt_ciclos.setText("");
-                } else if (insS.equals("jl")) {
-                    // if (op.s == "-") {
-
-                    //     i = volta_linha_array(varS, i);
-                    // }
-                    txt_ciclos.setText("");
-                } else if (insS.equals("jh")) {
-                    // if (op.s == "+" && op.z != "�") {
-
-                    //     i = volta_linha_array(varS, i);
-                    // }
-                    txt_ciclos.setText("");
-                } else if (insS.equals("je")) {
-                    // if (op.z == "�") {
-                    //     String label = varS;
-
-                    //     for (int a = i; a < linhas.length; a++) {
-                    //         if (linhas[a].contains(varS) == true) {
-                    //             i = a;
-                    //             System.out.println(linhas[i + 1]);
-                    //         }
-                    //     }
-                    // }
-                    txt_ciclos.setText("");
-                } else if (insS.equals("jne")) {
-                    // if (op.z != "�") {
-
-                    //     i = volta_linha_array(varS, i);
-                    // }
-                    txt_ciclos.setText("");
-                } else {
-                    // � uma label 
-                    // Se for uma label, colocar ela em uma posi��o de array de objetos label
-
-                    // Label_jmp label_nova = new Label_jmp(insS, i, 0);
-                    // // Insere em um array list o nome da label e a sua linha 
-                    // if (array_label.contains(label_nova.get_label())) {
-
-                    // } else {
-                    //     array_label.add(label_nova);
-
-                    //     System.out.print(array_label.get(0).get_label());
-                    //     System.out.print(array_label.get(0).get_label_linha());
-                    // }
-
                 }
 
-                
+                // Traduz para linguagem de máquina a operação
+                String traduzido = op.traduz(operacao, reg1, reg2, reg3);
 
-                String traduzido = op.traduz(insS, varS, var2S, var3S);
-
+                // Representa a próxima linha
                 int proximaLinha = i + 1;
 
+                // Pega o opcode
                 String opCode = traduzido.split(" ")[1];                
 
                 String palavraReg1 = "", palavraReg2 = "", palavraReg3 = "";
                 
-                palavraReg1 = verificaVariavel(varS);
-                palavraReg2 = verificaVariavel(var2S);
-                palavraReg3 = verificaVariavel(var3S);
+                // Verifica a qual registrador a variável aponta
+                palavraReg1 = verificaVariavel(reg1);
+                palavraReg2 = verificaVariavel(reg2);
+                palavraReg3 = verificaVariavel(reg3);
 
                 int numeroReg2 = 0, numeroReg3 = 0;
 
+                // Verifica se é um valor ou registrador
                 try {
-                    numeroReg2 = Integer.parseInt(var2S);
+                    numeroReg2 = Integer.parseInt(reg2);
                     palavraReg2 = Integer.toBinaryString(numeroReg2);
                 } catch (NumberFormatException e) {
                 }
 
                 try {
-                    numeroReg3 = Integer.parseInt(var3S);
+                    numeroReg3 = Integer.parseInt(reg3);
                     palavraReg3 = Integer.toBinaryString(numeroReg3);
                 } catch (NumberFormatException e) {
                 }
 
+                // Formata a String
                 String palavraSemEspaco = "";
                 if (palavraReg3.equals("")) {
                     palavraSemEspaco = opCode + palavraReg1;
@@ -384,16 +328,19 @@ public class Janela extends JFrame {
                 txt_s.setText("");
                 txt_z.setText("");
 
+                // Valida o tamanho máximo de valores
                 int totalZerosPalavra = 32 - palavraSemEspaco.length();
                 String zeros = new String(new char[32 - totalZerosPalavra - palavraSemEspaco.length()]).replace("\0", "0");
+
                 if (numeroReg2 > Math.pow(2, totalZerosPalavra) - 1
                     || numeroReg3 > Math.pow(2, totalZerosPalavra) - 1) {
-                    JOptionPane.showMessageDialog(null, "Numero maior que a quantidade de bits disponivel");
+                    JOptionPane.showMessageDialog(null, "N\u00famero maior que a quantidade de bits dispon\u00edvel");
                     return;
                 } else {
+                    // Coloca nos respectivos campos seus respectivos valores
                     txt_maquina.append(traduzido);
 
-                    txt_ciclos.setText(Ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao(insS, varS, var2S, var3S));
+                    txt_ciclos.setText(Ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao(operacao, reg1, reg2, reg3));
 
                     txt_s1.setText("" + add_zero(Integer.toString(op.s1)));
 
@@ -405,32 +352,32 @@ public class Janela extends JFrame {
 
                     if (result < 0) {
                         txt_s.setText("1");
-                    } else if (result > 0 && !insS.equals("beq")) {
+                    } else if (result > 0 && !operacao.equals("beq")) {
                         txt_s.setText("0");
                     } else {
                         txt_z.setText("1");
                     }
                 }
                 
+                // Formata String
                 String palavra = "";
                 if (palavraReg3.equals("")) {
                     palavra = opCode + " " + palavraReg1 + " " + palavraReg2 + palavraReg3 + " " + zeros;
                 } else {
                     palavra = opCode + " " + palavraReg1 + " " + palavraReg2 + " " + palavraReg3 + " " + zeros;
                 }
-                
-                System.out.println("palavra: " + palavra);
 
+                // Cria o elemento da estrutura das palavras e o adiciona a sua respectiva lista
                 Estrutura elemento = new Estrutura(palavra, proximaLinha + "");
+                estruturaPalavras.add(elemento);
 
-                list.add(elemento);
+                // Cria o elemento da estrutura das ciclos e o adiciona a sua respectiva lista
+                String ciclo = Ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao(operacao, reg1, reg2, reg3);
+                estruturaCiclos.add(ciclo);
 
-                System.out.println(elemento.getpalavra());
-                System.out.println(elemento.getEndereco());
-                
-                // txt_z.setText("" + op.z);
 
-                i++;//Pr�xima linha
+                // Próxima linha
+                i++;
 
                 if (i >= txt_cod.getLineCount()) {
                     JOptionPane.showMessageDialog(null, "Fim!\n Aperte em limpar para digitar um novo c\u00f3digo ou reiniciar para ler o c\u00f3digo novamente!");
@@ -438,6 +385,7 @@ public class Janela extends JFrame {
                 }
             }
         });
+
         contentPane.add(btn_rodar);
         contentPane.add(btn_reiniciar);
         contentPane.add(btn_limpar);
