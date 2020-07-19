@@ -1,3 +1,8 @@
+/*
+  Classe que representa a estrutura das palavras, possui endereço e a palavra,
+  além de getters e setters
+*/
+
 public class Estrutura {
   private String endereco;
   private String palavra;

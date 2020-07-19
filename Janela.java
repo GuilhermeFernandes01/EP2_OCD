@@ -24,13 +24,13 @@ public class Janela extends JFrame {
     private static JButton btn_rodar;
     private static JButton btn_reiniciar;
     private static JButton btn_limpar;
-    
+
     private static final long serialVersionUID = 42L;
 
     public int i = 0;
     Operacoes op = new Operacoes();
     Ciclos ciclos = new Ciclos();
-   
+    Traducao traducao = new Traducao();
 
     // Roda a aplicação
     public static void main(String[] args) {
@@ -211,7 +211,7 @@ public class Janela extends JFrame {
                     char x = aux.charAt(j);
                     texto.add(String.valueOf(x));
                 }
-                
+
                 String[] linha = new String[texto.size()];
                 texto.toArray(linha);
 
@@ -229,13 +229,13 @@ public class Janela extends JFrame {
                     } else if (linha[i].equals(" ") || linha[i].equals(",")) {
                         encontrou++;
                     }
-                }            
+                }
 
                 // Torna em String as listas que tínhamos
                 operacao = retornaString(listOperacao);
                 reg1 = retornaString(reg1List);
                 reg2 = retornaString(reg2List);
-                reg3 = retornaString(reg3List);    
+                reg3 = retornaString(reg3List);
 
                 // Instruções
                 if (operacao.equals("add")) {
@@ -266,16 +266,16 @@ public class Janela extends JFrame {
                 }
 
                 // Traduz para linguagem de máquina a operação
-                String traduzido = op.traduz(operacao, reg1, reg2, reg3);
+                String traduzido = traducao.traduz(operacao, reg1, reg2, reg3);
 
                 // Representa a próxima linha
                 int proximaLinha = i + 1;
 
                 // Pega o opcode
-                String opCode = traduzido.split(" ")[1];                
+                String opCode = traduzido.split(" ")[1];
 
                 String palavraReg1 = "", palavraReg2 = "", palavraReg3 = "";
-                
+
                 // Verifica a qual registrador a variável aponta
                 palavraReg1 = verificaVariavel(reg1);
                 palavraReg2 = verificaVariavel(reg2);
@@ -309,17 +309,19 @@ public class Janela extends JFrame {
 
                 // Valida o tamanho máximo de valores
                 int totalZerosPalavra = 32 - palavraSemEspaco.length();
-                String zeros = new String(new char[32 - totalZerosPalavra - palavraSemEspaco.length()]).replace("\0", "0");
+                String zeros = new String(new char[32 - totalZerosPalavra - palavraSemEspaco.length()]).replace("\0",
+                        "0");
 
                 if (numeroReg2 > Math.pow(2, totalZerosPalavra) - 1
-                    || numeroReg3 > Math.pow(2, totalZerosPalavra) - 1) {
+                        || numeroReg3 > Math.pow(2, totalZerosPalavra) - 1) {
                     JOptionPane.showMessageDialog(null, "N\u00famero maior que a quantidade de bits dispon\u00edvel");
                     return;
                 } else {
                     // Coloca nos respectivos campos seus respectivos valores
                     txt_maquina.append(traduzido);
 
-                    txt_ciclos.setText(Ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao(operacao, reg1, reg2, reg3));
+                    txt_ciclos
+                            .setText(Ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao(operacao, reg1, reg2, reg3));
 
                     txt_s1.setText("" + add_zero(Integer.toString(op.s1)));
 
@@ -337,7 +339,7 @@ public class Janela extends JFrame {
                         txt_z.setText("1");
                     }
                 }
-                
+
                 // Formata String
                 String palavra = "";
                 if (palavraReg3.equals("")) {
@@ -354,12 +356,12 @@ public class Janela extends JFrame {
                 String ciclo = Ciclos.CicloDeBusca() + "\n" + ciclos.CicloDeExecucao(operacao, reg1, reg2, reg3);
                 estruturaCiclos.add(ciclo);
 
-
                 // Próxima linha
                 i++;
 
                 if (i >= txt_cod.getLineCount()) {
-                    JOptionPane.showMessageDialog(null, "Fim!\n Aperte em limpar para digitar um novo c\u00f3digo ou reiniciar para ler o c\u00f3digo novamente!");
+                    JOptionPane.showMessageDialog(null,
+                            "Fim!\n Aperte em limpar para digitar um novo c\u00f3digo ou reiniciar para ler o c\u00f3digo novamente!");
                     btn_rodar.setEnabled(false);
                 }
             }
@@ -407,7 +409,7 @@ public class Janela extends JFrame {
         txt_s4 = new JTextField();
         txt_s4.setBounds(800, 132, 46, 20);
         contentPane.add(txt_s4);
-        txt_s4.setColumns(10);        
+        txt_s4.setColumns(10);
 
         JLabel lblFlags = new JLabel("Flags");
         lblFlags.setBounds(805, 163, 46, 14);
@@ -420,7 +422,7 @@ public class Janela extends JFrame {
         txt_s = new JTextField();
         txt_s.setBounds(775, 196, 25, 20);
         contentPane.add(txt_s);
-        txt_s.setColumns(10);        
+        txt_s.setColumns(10);
 
         JLabel lblZ = new JLabel("Z");
         lblZ.setBounds(848, 180, 19, 14);

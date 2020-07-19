@@ -49,7 +49,7 @@ public class Operacoes {
         } catch (NumberFormatException e) {
             reg3 = valor;
         }
-        
+
         if (!ehNumero) {
             switch (reg3) {
                 case "s1":
@@ -68,7 +68,7 @@ public class Operacoes {
                     break;
             }
         }
-        
+
         switch (regSoma) {
             case "$s1":
                 valueReg2 = getS1();
@@ -106,11 +106,10 @@ public class Operacoes {
             default:
                 break;
         }
-        
 
         return soma;
     }
-    
+
     public int sub(String armazenado, String regSub, String valor) {
         String reg3 = "";
         boolean ehNumero = false;
@@ -122,7 +121,7 @@ public class Operacoes {
         } catch (NumberFormatException e) {
             reg3 = valor;
         }
-        
+
         if (!ehNumero) {
             switch (reg3) {
                 case "$s1":
@@ -141,7 +140,7 @@ public class Operacoes {
                     break;
             }
         }
-        
+
         switch (regSub) {
             case "$s1":
                 valueReg2 = getS1();
@@ -179,11 +178,10 @@ public class Operacoes {
             default:
                 break;
         }
-        
 
         return sub;
     }
-    
+
     public int li(String reg, String valor) {
         int valueReg = 0;
         valueReg = Integer.parseInt(valor);
@@ -211,7 +209,7 @@ public class Operacoes {
 
         return valueReg;
     }
-    
+
     public int mov(String destino, String origem) {
         int valueOrigem = 0;
         int valueDestino = 0;
@@ -221,7 +219,7 @@ public class Operacoes {
                 valueOrigem = getS1();
                 break;
             case "$s2":
-            valueOrigem = getS2();
+                valueOrigem = getS2();
                 break;
             case "$s3":
                 valueOrigem = getS3();
@@ -253,7 +251,7 @@ public class Operacoes {
             default:
                 break;
         }
-        
+
         return valueDestino;
     }
 
@@ -306,7 +304,7 @@ public class Operacoes {
 
         return numeroLinha - 2;
     }
-    
+
     public int bne(String reg, String comparador, String linha) {
         int numeroLinha = 0;
 
@@ -356,7 +354,7 @@ public class Operacoes {
 
         return numeroLinha - 2;
     }
-    
+
     public int slt(String armazenador, String comparador, String comparado) {
         int comparadorValue = 0;
         int comparadoValue = 0;
@@ -378,7 +376,7 @@ public class Operacoes {
             default:
                 break;
         }
-        
+
         switch (comparado) {
             case "$s1":
                 comparadoValue = getS1();
@@ -395,7 +393,7 @@ public class Operacoes {
             default:
                 break;
         }
-    
+
         switch (armazenador) {
             case "$s1":
                 if (comparadorValue < comparadoValue) {
@@ -439,691 +437,4 @@ public class Operacoes {
 
         return armazenadorValue;
     }
-    
-    public String traduz(String operacao, String reg1, String reg2, String reg3) {
-        int arraySinaisControle[] = new int[28];
-        int arrayOpCodes[] = new int[4];
-        int arrayMemoria[] = new int[2];
-        int arrayPulo[] = new int[2];
-        int arrayEnderecoPulo[] = new int[7];
-
-        arraySinaisControle = zeraArray(arraySinaisControle);
-        arrayOpCodes = zeraArray(arrayOpCodes);
-        arrayMemoria = zeraArray(arrayMemoria);
-        arrayPulo = zeraArray(arrayPulo);
-        arrayEnderecoPulo = zeraArray(arrayEnderecoPulo);
-
-        String palavra = "";
-
-        switch (operacao) {
-            case "li":
-                arraySinaisControle[19-1] = 1;
-
-                switch (reg1) {
-                    case "$s1":
-                        arraySinaisControle[6-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[8-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[10-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[12-1] = 1;
-                        break;
-                    default:
-                        break;
-                }                
-                break;
-            case "lw":
-                break;
-            case "sw":
-                break;
-            case "mov":
-                arrayOpCodes[3-1] = 1;
-                arrayOpCodes[4-1] = 1;
-
-                switch (reg1) {
-                    case "$s1":
-                        arraySinaisControle[6-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[8-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[10-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[12-1] = 1;
-                        break;
-                    default:
-                        break;
-                }
-                
-                switch (reg2) {
-                    case "$s1":
-                        arraySinaisControle[7-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[9-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[11-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[13-1] = 1;
-                        break;
-                    default:
-                        break;
-                }
-
-                break;
-            case "beq":
-                arrayOpCodes[1-1] = 1;
-                arraySinaisControle[21-1] = 1;
-
-                switch (reg2) {
-                    case "$s1":
-                        arraySinaisControle[7-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[9-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[11-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[13-1] = 1;
-                        break;
-                    default:
-                        break;
-                }
-
-                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
-
-                arraySinaisControle = zeraArray(arraySinaisControle);
-                arraySinaisControle[22-1] = 1;
-
-                switch (reg1) {
-                    case "$s1":
-                        arraySinaisControle[7-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[9-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[11-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[13-1] = 1;
-                        break;
-                    default:
-                        break;
-                }
-
-                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
-                
-                arraySinaisControle = zeraArray(arraySinaisControle);
-                arrayPulo[1-1] = 1;
-
-                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
-                
-                arraySinaisControle[28-1] = 1;
-                arraySinaisControle[26-1] = 1;
-                arraySinaisControle[5-1] = 1;
-                arraySinaisControle[1-1] = 1;
-
-                arrayOpCodes = zeraArray(arrayOpCodes);
-                arrayOpCodes[1-1] = 1;
-                arrayOpCodes[3-1] = 1;
-                break;
-            case "bne":
-                arrayOpCodes[1-1] = 1;
-                arrayOpCodes[4-1] = 1;
-                arraySinaisControle[21-1] = 1;
-
-                int valueReg1 = 0, valueReg2 = 0;
-
-                switch (reg2) {
-                    case "$s1":
-                        arraySinaisControle[7-1] = 1;
-                        valueReg2 = getS1();
-                        break;
-                    case "$s2":
-                        arraySinaisControle[9-1] = 1;
-                        valueReg2 = getS2();
-                        break;
-                    case "$s3":
-                        arraySinaisControle[11-1] = 1;
-                        valueReg2 = getS3();
-                        break;
-                    case "$s4":
-                        arraySinaisControle[13-1] = 1;
-                        valueReg2 = getS4();
-                        break;
-                    default:
-                        break;
-                }
-
-                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
-
-                arraySinaisControle = zeraArray(arraySinaisControle);
-                arraySinaisControle[22-1] = 1;
-
-                switch (reg1) {
-                    case "$s1":
-                        arraySinaisControle[7-1] = 1;
-                        valueReg1 = getS1();
-                        break;
-                    case "$s2":
-                        arraySinaisControle[9-1] = 1;
-                        valueReg1 = getS2();
-                        break;
-                    case "$s3":
-                        arraySinaisControle[11-1] = 1;
-                        valueReg1 = getS3();
-                        break;
-                    case "$s4":
-                        arraySinaisControle[13-1] = 1;
-                        valueReg1 = getS4();
-                        break;
-                    default:
-                        break;
-                }
-
-                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
-                
-                arraySinaisControle = zeraArray(arraySinaisControle);
-
-                if (valueReg1 - valueReg2 < 0) {
-                    arrayPulo[2-1] = 1;
-                } else {
-                    arrayPulo[2-1] = 0;
-                }
-
-                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
-                
-                arraySinaisControle[28-1] = 1;
-                arraySinaisControle[26-1] = 1;
-                arraySinaisControle[5-1] = 1;
-                arraySinaisControle[1-1] = 1;
-
-                arrayOpCodes = zeraArray(arrayOpCodes);
-                arrayOpCodes[1-1] = 1;
-                arrayOpCodes[3-1] = 1;
-                break;
-            case "j":
-                arraySinaisControle[28-1] = 1;
-                arraySinaisControle[26-1] = 1;
-                arraySinaisControle[5-1] = 1;
-                arraySinaisControle[1-1] = 1;
-
-                arrayOpCodes[1-1] = 1;
-                arrayOpCodes[3-1] = 1;
-
-                arrayPulo[1-1] = 1;
-                arrayPulo[2-1] = 1;
-                break;
-            case "slt":
-                arrayOpCodes[1-1] = 1;
-                arrayOpCodes[3-1] = 1;
-                arrayOpCodes[4-1] = 1;
-                arraySinaisControle[21-1] = 1;
-
-                switch (reg2) {
-                    case "$s1":
-                        arraySinaisControle[7-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[9-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[11-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[13-1] = 1;
-                        break;
-                    default:
-                        break;
-                }
-
-                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
-
-                arraySinaisControle = zeraArray(arraySinaisControle);
-                arraySinaisControle[22-1] = 1;
-
-                switch (reg3) {
-                    case "$s1":
-                        arraySinaisControle[6-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[8-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[10-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[12-1] = 1;
-                        break;
-                    default:
-                        break;
-                }
-
-                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
-
-                arraySinaisControle = zeraArray(arraySinaisControle);
-                arraySinaisControle[23-1] = 1;
-
-                switch (reg1) {
-                    case "$s1":
-                        arraySinaisControle[6-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[8-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[10-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[12-1] = 1;
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            default:
-                break;
-        }
-
-        if (operacao.equals("add")) {
-            boolean ehNumero = false;
-            try {
-                Integer.parseInt(reg3);
-                ehNumero = true;
-            } catch (NumberFormatException e) {
-            }
-
-            if (ehNumero) {
-                arrayOpCodes[2-1] = 1;
-                arrayOpCodes[4-1] = 1;
-                arraySinaisControle[21-1] = 1;
-
-                switch (reg2) {
-                    case "$s1":
-                        arraySinaisControle[7-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[9-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[11-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[13-1] = 1;
-                        break;
-                    default:
-                        break;
-                }
-
-                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
-                
-                arraySinaisControle = zeraArray(arraySinaisControle);
-                arraySinaisControle[19-1] = 1;
-                arraySinaisControle[22-1] = 1;
-
-                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
-
-                arraySinaisControle = zeraArray(arraySinaisControle);
-                arraySinaisControle[23-1] = 1;
-
-                switch (reg1) {
-                    case "$s1":
-                        arraySinaisControle[6-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[8-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[10-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[12-1] = 1;
-                        break;
-                    default:
-                        break;
-                }
-            } else {
-                arrayOpCodes[2-1] = 1; 
-                arraySinaisControle[21-1] = 1;
-
-                switch (reg2) {
-                    case "$s1":
-                        arraySinaisControle[7-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[9-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[11-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[13-1] = 1;
-                        break;
-                    default:
-                        break;
-                }
-
-                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
-                
-                arraySinaisControle = zeraArray(arraySinaisControle);
-                arraySinaisControle[22-1] = 1;
-
-                switch (reg3) {
-                    case "$s1":
-                        arraySinaisControle[7-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[9-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[11-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[13-1] = 1;
-                        break;
-                    default:
-                        break;
-                }
-
-                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
-
-                arraySinaisControle = zeraArray(arraySinaisControle);
-                arraySinaisControle[23-1] = 1;
-
-                switch (reg1) {
-                    case "$s1":
-                        arraySinaisControle[6-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[8-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[10-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[12-1] = 1;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        if (operacao.equals("sub")) {
-            boolean ehNumero = false;
-            try {
-                Integer.parseInt(reg3);
-                ehNumero = true;
-            } catch (NumberFormatException e) {
-            }
-
-            if (ehNumero) {
-                arrayOpCodes[2-1] = 1;
-                arrayOpCodes[3-1] = 1;
-                arrayOpCodes[4-1] = 1;
-                arraySinaisControle[21-1] = 1;
-
-                switch (reg2) {
-                    case "$s1":
-                        arraySinaisControle[7-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[9-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[11-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[13-1] = 1;
-                        break;
-                    default:
-                        break;
-                }
-
-                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
-                
-                arraySinaisControle = zeraArray(arraySinaisControle);
-                arraySinaisControle[19-1] = 1;
-                arraySinaisControle[22-1] = 1;
-
-                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
-
-                arraySinaisControle = zeraArray(arraySinaisControle);
-                arraySinaisControle[23-1] = 1;
-
-                switch (reg1) {
-                    case "$s1":
-                        arraySinaisControle[6-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[8-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[10-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[12-1] = 1;
-                        break;
-                    default:
-                        break;
-                }
-            } else {
-                arrayOpCodes[2-1] = 1;
-                arrayOpCodes[3-1] = 1;
-                arraySinaisControle[21-1] = 1;
-
-                switch (reg2) {
-                    case "$s1":
-                        arraySinaisControle[7-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[9-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[11-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[13-1] = 1;
-                        break;
-                    default:
-                        break;
-                }
-
-                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
-                
-                arraySinaisControle = zeraArray(arraySinaisControle);
-                arraySinaisControle[22-1] = 1;
-
-                switch (reg3) {
-                    case "$s1":
-                        arraySinaisControle[7-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[9-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[11-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[13-1] = 1;
-                        break;
-                    default:
-                        break;
-                }
-
-                palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-                    + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-                    + " " + arrayToString(arrayEnderecoPulo) + "\n";
-
-                arraySinaisControle = zeraArray(arraySinaisControle);
-                arraySinaisControle[23-1] = 1;
-
-                switch (reg1) {
-                    case "$s1":
-                        arraySinaisControle[6-1] = 1;
-                        break;
-                    case "$s2":
-                        arraySinaisControle[8-1] = 1;
-                        break;
-                    case "$s3":
-                        arraySinaisControle[10-1] = 1;
-                        break;
-                    case "$s4":
-                        arraySinaisControle[12-1] = 1;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        palavra += arrayToString(arraySinaisControle) + " " + arrayToString(arrayOpCodes) 
-            + " " + arrayToString(arrayMemoria) + " " + arrayToString(arrayPulo) 
-            + " " + arrayToString(arrayEnderecoPulo) + "\n";
-        return palavra;
-    }
-    
-    public String arrayToString(int[] array) {
-        String retorno = "";
-
-        for (int i = 0; i < array.length; i++) {
-            retorno += String.valueOf(array[i]);
-        }
-
-        return retorno;
-    }
-    
-    public int[] zeraArray(int[] array) {
-        int[] novoArray = new int[array.length];
-
-        for (int i = 0; i < array.length; i++) {
-            array[i] = 0;
-        }
-
-        return novoArray;
-    }
-    // public static int strParaInt(String variable) {
-    //     try {
-    //         return Integer.parseInt(variable);
-
-    //     } catch (NumberFormatException e) {
-    //         return -1;
-    //     }
-    // }
-
-    // public int add(String varS, String var2S) {
-    //     int response = strParaInt(var2S), result;
-    //     if (response == -1) {//� String (com registradores)
-    //         String x = compararReg(varS, var2S);
-    //         if (x == "ab") {
-    //             setAx(getAx() + getBx());
-    //             return getAx();
-    //         } else if (x == "ba") {
-    //             setBx(getAx() + getBx());
-    //             return getBx();
-    //         } else if (x == "ac") {
-    //             setAx(getAx() + getCx());
-    //             return getAx();
-    //         } else if (x == "ca") {
-    //             setCx(getAx() + getCx());
-    //             return getCx();
-    //         } else if (x == "ad") {
-    //             setAx(getAx() + getDx());
-    //             return getAx();
-    //         } else if (x == "da") {
-    //             setDx(getAx() + getDx());
-    //             return getDx();
-    //         } else if (x == "aa") {
-    //             setAx(getAx() + getAx());
-    //             return getAx();
-    //         } else if (x == "bc") {
-    //             setBx(getBx() + getCx());
-    //             return getBx();
-    //         } else if (x == "cb") {
-    //             setCx(getBx() + getCx());
-    //             return getCx();
-    //         } else if (x == "bd") {
-    //             setBx(getBx() + getDx());
-    //             return getBx();
-    //         } else if (x == "db") {
-    //             setDx(getBx() + getDx());
-    //             return getDx();
-    //         } else if (x == "bb") {
-    //             setBx(getBx() + getBx());
-    //             return getBx();
-    //         } else if (x == "cd") {
-    //             setCx(getCx() + getDx());
-    //             return getCx();
-    //         } else if (x == "dc") {
-    //             setDx(getCx() + getDx());
-    //             return getDx();
-    //         } else if (x == "cc") {
-    //             setCx(getCx() + getCx());
-    //             return getCx();
-    //         } else if (x == "dd") {
-    //             setDx(getDx() + getDx());
-    //             return getDx();
-    //         }
-
-    //     } else {
-    //         String x = compararReg(varS, "");
-    //         if (x == "a") {
-    //             setAx(getAx() + response);
-    //             return getAx();
-    //         } else if (x == "b") {
-    //             setBx(getBx() + response);
-    //             return getBx();
-    //         } else if (x == "c") {
-    //             setCx(getCx() + response);
-    //             return getCx();
-    //         } else if (x == "d") {
-    //             setDx(getDx() + response);
-    //             return getDx();
-    //         }
-
-    //     }
-
-    //     return 0;
-    // }
 }
