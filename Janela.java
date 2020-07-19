@@ -83,10 +83,10 @@ public class Janela extends JFrame {
         i = 0;
 
         // Zera todos os campos de texto
-        txt_s1.setText("0000");
-        txt_s2.setText("0000");
-        txt_s3.setText("0000");
-        txt_s4.setText("0000");
+        txt_s1.setText("0");
+        txt_s2.setText("0");
+        txt_s3.setText("0");
+        txt_s4.setText("0");
         txt_z.setText("");
         txt_s.setText("");
 
@@ -254,15 +254,8 @@ public class Janela extends JFrame {
                     i = result;
                 } else if (operacao.equals("slt")) {
                     result = op.slt(reg1, reg2, reg3);
-                } else if (operacao.equals("jmp")) {
-                    for (int a = i; a < linhas.length; a++) {
-                        if (linhas[a].contains(reg1) == true) {
-                            i = a;
-                            System.out.println(linhas[i + 1]);
-                        }
-                    }
-
-                    txt_ciclos.setText("");
+                } else if (operacao.equals("j")) {
+                    i = Integer.parseInt(reg1) - 2;
                 }
 
                 // Traduz para linguagem de máquina a operação
